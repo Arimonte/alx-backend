@@ -1,36 +1,44 @@
 #!/usr/bin/env python3
+"""A simple flask app
 """
-A Basic flask application
-"""
-from flask import Flask
-from flask import render_template
+
+from flask import Flask, render_template
 from flask_babel import Babel
 
 
 class Config(object):
-    """
-    Application configuration class
+    """Flask app configuration
+
+    This class defines the configuration options for the Flask app.
+
+    Attributes:
+        LANGUAGES (list): List of available languages.
+        BABEL_DEFAULT_LOCALE (str): Default locale for Babel.
+        BABEL_DEFAULT_TIMEZONE (str): Default timezone for Babel.
     """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
+# Configure the Flask app
 
-# Instantiate the application object
+
 app = Flask(__name__)
 app.config.from_object(Config)
-
-# Wrap the application with Babel
 babel = Babel(app)
 
 
-@app.route('/', strict_slashes=False)
-def index() -> str:
-    """
-    Renders a basic html template
+@app.route('/')
+def index():
+    """Render the index page
+
+    This function renders the index.html template.
+
+    Returns:
+        str: Rendered HTML content.
     """
     return render_template('1-index.html')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port="5000", host="0.0.0.0", debug=True)
